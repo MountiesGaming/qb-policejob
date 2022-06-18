@@ -149,6 +149,9 @@ RegisterNetEvent('evidence:client:ClearBlooddropsInArea', function()
 end)
 
 RegisterNetEvent('evidence:client:AddCasing', function(casingId, weapon, coords, serie)
+    if serie == "Scratched" then
+        serie = "Unkown"
+    end
     Casings[casingId] = {
         type = weapon,
         serie = serie and serie or Lang:t('evidence.serial_not_visible'),
