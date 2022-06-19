@@ -1059,6 +1059,20 @@ RegisterNetEvent('police:server:SyncSpikes', function(table)
     TriggerClientEvent('police:client:SyncSpikes', -1, table)
 end)
 
+QBCore.Functions.CreateUseableItem("filled_evidence_bag", function(source,item)
+    TriggerClientEvent('evidenceBag:used',source,item);
+end);
+
+RegisterNetEvent('server:evidenceBag:setNote');
+AddEventHandler('server:evidenceBag:setNote', function(item,note)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local i = item.info;
+    i.evidenceNote=note;
+    if(Player.Functions.RemoveItem("filled_evidence_bag",1,item.slot)) then
+        Player.Functions.AddItem("filled_evidence_bag",1,item.slot,i);
+    end
+end)
+
 -- Threads
 CreateThread(function()
     while true do

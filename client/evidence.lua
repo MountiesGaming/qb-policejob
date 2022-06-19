@@ -193,6 +193,28 @@ RegisterNetEvent('evidence:client:ClearCasingsInArea', function()
     end)
 end)
 
+RegisterNetEvent('evidenceBag:used');
+AddEventHandler('evidenceBag:used', function(item)
+    local dialog = exports['qb-input']:ShowInput({
+        header = "Write evidence note",
+        submitText = "Write",
+        inputs = {
+            {
+                text = "Note",
+                name = "pv-evb-note",
+                type = "text",
+                isRequired = true,
+            },
+        }
+    });
+
+    if dialog ~= nil then
+        if(dialog['pv-evb-note'] ~= nil and dialog['pv-evb-note'] ~= '') then
+            TriggerServerEvent('server:evidenceBag:setNote',item,dialog['pv-evb-note']);
+        end
+    end
+end)
+
 -- Threads
 
 CreateThread(function()
